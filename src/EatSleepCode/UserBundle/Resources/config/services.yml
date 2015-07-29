@@ -1,0 +1,36 @@
+services:
+    eatsleepcode.form.type.user:
+        class: EatSleepCode\UserBundle\Form\Type\UserType
+        arguments: ["@security.context", "@security.role_hierarchy"]
+        tags:
+            - { name: form.type, alias: user }
+
+    eatsleepcode_user.registration.form.type:
+        class: EatSleepCode\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: eatsleepcode_user_registration }
+
+    eatsleepcode_user.profile.form.type:
+        class: EatSleepCode\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: eatsleepcode_user_profile }
+
+    eatsleepcode_user.change_password.form.type:
+        class: EatSleepCode\UserBundle\Form\Type\ChangePasswordFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: eatsleepcode_user_change_password }
+
+    eatsleepcode_user.resetting.form.type:
+        class: EatSleepCode\UserBundle\Form\Type\ResettingFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: eatsleepcode_user_resetting }
+
+    eatsleepcode_user.events:
+        class: EatSleepCode\UserBundle\EventListener\UserEventListener
+        arguments: [@router]
+        tags:
+            - { name: kernel.event_subscriber }

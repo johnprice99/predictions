@@ -1,0 +1,72 @@
+{% block form_row %}
+	{% spaceless %}
+		{% if attr.noWrappingDiv is not defined %}<div class="formRow clearfix">{% endif %}
+		{% if (form.vars.block_prefixes.1 == 'checkbox') %}
+			{{ form_widget(form) }}
+			{{ form_label(form, null, {'label_attr': {'class': 'checkboxLabel'}}) }}
+		{% else %}
+			{{ form_label(form) }}
+			{% if (form.vars.block_prefixes.1 == 'choice') %}
+				<div class="fieldWithIcon select">{{ form_widget(form) }}</div>
+			{% elseif (form.vars.block_prefixes.1 == 'date') %}
+				<div class="fieldWithIcon date">{{ form_widget(form) }}</div>
+			{% else %}
+				{{ form_widget(form) }}
+			{% endif %}
+		{% endif %}
+		{{ form_errors(form) }}
+		{% if attr.noWrappingDiv is not defined %}</div>{% endif %}
+	{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_label %}
+	{% spaceless %}
+		{% if label is not sameas(false) %}
+			{% if not compound %}
+				{% set label_attr = label_attr|merge({'for': id}) %}
+			{% endif %}
+			{% if required %}
+				{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+			{% else %}
+				{% if label_attr.optional is not defined %}
+					{% set label_attr = label_attr|merge({'optional': label_attr.optional|default(true)}) %}
+				{% endif %}
+			{% endif %}
+			{% if label is empty %}
+				{% set label = name|humanize %}
+			{% endif %}
+			<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain)|raw }}{% if not required and label_attr.optional and form.vars.block_prefixes.1 != 'checkbox' %} <span>(optional)</span>{% endif %}</label>
+		{% endif %}
+	{% endspaceless %}
+{% endblock form_label %}
+
+{% block form_errors %}
+	{% spaceless %}
+		{% if errors|length > 0 %}
+			<ul class="errors">
+				{% for error in errors %}
+					<li>{{ error.message }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% endspaceless %}
+{% endblock form_errors %}
+
+{% block button_row -%}
+	{% if attr.noWrappingDiv is not defined %}<div class="formRow clearfix">{% endif %}
+		{{- form_widget(form) -}}
+	{% if attr.noWrappingDiv is not defined %}</div>{% endif %}
+{%- endblock button_row %}
+
+{% block button_widget -%}
+	{% spaceless %}
+		{% if label is empty -%}
+			{% set label = name|humanize %}
+		{%- endif -%}
+		<button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+		{% if attr.icon is defined %}
+			<i class="fa {{ attr.icon }}"></i>
+		{% endif %}
+		{{ label|trans({}, translation_domain) }}</button>
+	{% endspaceless %}
+{%- endblock button_widget %}

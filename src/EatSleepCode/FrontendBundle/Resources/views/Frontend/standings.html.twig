@@ -1,0 +1,28 @@
+{% extends 'EatSleepCodeFrontendBundle::frontend.html.twig' %}
+
+{% block heading %}Latest Standings{% endblock %}
+
+{% block content %}
+    <table cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <th>Position</th>
+            <th class="left">Name</th>
+            <th>Total Predictions</th>
+            <th>Exact Result</th>
+            <th>Correct Winner</th>
+            <th>Wrong</th>
+            <th>Points</th>
+        </tr>
+        {% for row in standings %}
+            <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}">
+                <td>{{ loop.index }}</td>
+                <td class="left">{{ row.user }}</td>
+                <td>{{ row.predictions }}</td>
+                <td>{{ row.exact }}</td>
+                <td>{{ row.correct }}</td>
+                <td>{{ row.predictions - (row.exact + row.correct) }}</td>
+                <td>{{ (row.points is not empty) ? row.points : 0 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

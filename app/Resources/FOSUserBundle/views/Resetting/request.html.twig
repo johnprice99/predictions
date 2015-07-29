@@ -1,0 +1,24 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Forgotten Password{% endblock %}
+
+{% block heading %}Forgotten Password{% endblock %}
+
+{% block fos_user_content %}
+    {% if invalid_username is defined %}
+        <div class="flashError">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
+    {% endif %}
+
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <div class="formRow">
+            <label for="username" class="required">{{ 'resetting.request.username'|trans }}</label>
+            <input type="text" id="username" name="username" required="required" class="email" data-msg-required="Please enter your email address" />
+        </div>
+        <div class="formRow clearfix">
+            <button type="submit" class="right">{{ 'resetting.request.submit'|trans }}</button>
+            <a href="{{ path('fos_user_security_login') }}" class="left">&lt; Back to Login</a>
+        </div>
+    </form>
+{% endblock fos_user_content %}

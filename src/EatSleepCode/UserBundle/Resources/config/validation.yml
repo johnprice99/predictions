@@ -1,0 +1,10 @@
+FOS\UserBundle\Model\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: { fields: email, message: "This email address has already been registered. Please log in to that account, or use a different one." }
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: emailCanonical
+    properties:
+        email:
+            - Email: { message: "The email {{ value }} is not a valid email", checkMX: true }
+        plainPassword:
+            - Regex: { pattern: "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/", message: "Your password must contain at least 1 uppercase letter and 1 number", groups: [Registration, ResetPassword, ChangePassword] }
+            - Length: { min: 8, minMessage: "Your password must have at least {{ limit }} characters", max: 16, maxMessage: "Your password must not be longer than {{ limit }} characters", groups: [Registration, ResetPassword, ChangePassword] }

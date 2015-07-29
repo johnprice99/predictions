@@ -1,0 +1,15 @@
+{% block subject %}{% autoescape false %}Welcome {{user.fullName}}!{% endautoescape %}{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+Hello {{user.fullName}}!
+
+To finish activating your account - please visit {{confirmationUrl}}
+{% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+	<h1>Hello {{user.fullName}}!</h1>
+
+	<p>To finish activating your account - please visit <a href="{{confirmationUrl}}">this link</a></p>
+{% endblock %}

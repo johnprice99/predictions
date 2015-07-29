@@ -1,0 +1,15 @@
+{% extends 'EatSleepCodeAdminBundle::admin.html.twig' %}
+
+{% block title %}Admin | Fixtures{% endblock %}
+
+{% block heading %}Fixtures{% endblock %}
+
+{% block content %}
+    <p><a href="{{ path('fixture_download') }}">Download/Update Fixtures</a></p>
+
+    <ul>
+        {% for fixture in fixtures %}
+            <li>{{ fixture.toString }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

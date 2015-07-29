@@ -1,0 +1,17 @@
+{% extends 'EatSleepCodeAdminBundle::admin.html.twig' %}
+
+{% block title %}Admin | Users | Masquerade{% endblock %}
+
+{% block content %}
+    <h2>Masquerade as user</h2>
+
+    <form action="{{ path('fe_fixture_list') }}" method="get">
+        <div class="formRow">
+            <label for="username">User's Email:</label>
+            <input type="text" id="username" name="_masquerade" />
+        </div>
+        <div class="formRow">
+            <button type="submit">Start Masquerade</button>
+        </div>
+    </form>
+{% endblock %}

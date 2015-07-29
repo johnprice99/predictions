@@ -1,0 +1,56 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}My Account{% endblock %}
+
+{% block heading %}Account settings{% endblock %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="formRow">
+	    <p>To change your password, <a href="{{ path('fos_user_change_password') }}">click here</a></p>
+    </div>
+
+	<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+		{{ form_row(form._token) }}
+		{{ form_row(form.firstName) }}
+		{{ form_row(form.lastName) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.current_password) }}
+
+		{#<img id="avatar" src="{{ app.user.getAvatarURL() }}" alt="Your Gravatar Image" width="100" height="100" />#}
+		{#<p{% if app.user.profilePicturePath %} style="display:none;"{% endif %}>Your avatar is pulled from <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>. But you can upload a custom one below if you would prefer.</p>#}
+		{#{% if app.user.profilePicturePath %}#}
+			{#{{ form_row(form.clearProfilePicture) }}#}
+			{#<div style="display:none;">{{ form_row(form.profilePictureFile) }}</div>#}
+		{#{% else %}#}
+			{#{{ form_row(form.profilePictureFile) }}#}
+		{#{% endif %}#}
+
+		<div class="formRow clearfix">
+			<button type="submit" class="right">{{ 'profile.edit.submit'|trans }}</button>
+		</div>
+	</form>
+
+	{#<h2>Delete Account</h2>#}
+
+	{#<p>If you would like to completely remove your account, please click the button below. Please note that all information will be removed, and unrecoverable.</p>#}
+
+	{#<a href="{{ path('account_delete') }}" id="deleteAccount">Delete my account</a>#}
+
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+	<script>
+		var gravatarURL = '{{ app.user.getGravatarURL() }}';
+		$('#fos_user_profile_form_clearProfilePicture').on('click', function() {
+			$('#fos_user_profile_form_profilePicturePath').val('');
+			$('#avatar').attr('src', gravatarURL).next().show();
+			$(this).parent().hide().next('div').show();
+		});
+
+		$('#deleteAccount').bind('click', function() {
+			return confirm('Are you sure you want to remove your account?')
+		});
+	</script>
+{% endblock %}

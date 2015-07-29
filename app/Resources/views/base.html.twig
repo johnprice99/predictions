@@ -1,0 +1,63 @@
+{% if form is defined %}{% form_theme form '::fields.html.twig' %}{% endif %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        {% stylesheets 'bundles/eatsleepcodefrontend/css/global.css' filter='cssrewrite,?uglifycss' output='css/predictions.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <section class="pageWrap">
+            <header>
+                <nav class="primary clearfix">
+                    <ul class="left">
+                        {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <li><a href="{{ path('fe_fixture_list') }}">Fixtures</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('fe_standings') }}">Standings</a></li>
+                    </ul>
+                    <ul class="right">
+                        {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Account settings</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        {% else %}
+                            <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                            <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <nav class="secondary">
+                        <ul>
+                            <li><a href="{{ path('team_list') }}">Teams</a></li>
+                            <li><a href="{{ path('fixture_list') }}">Fixtures</a></li>
+                            <li><a href="{{ path('user_list') }}">Users</a></li>
+                            <li><a href="{{ path('setting_list') }}">Settings</a></li>
+                        </ul>
+                    </nav>
+                {% endif %}
+
+                <div class="clearfix">
+                    <h1 class="left">{% block heading %}{% endblock %}</h1>
+                    {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <div id="avatar" style="background-image:url({{ app.user.getAvatarURL(50) }})" class="right"></div>
+                    {% endif %}
+                </div>
+            </header>
+            <div class="content">
+                {% include 'flashMessages.html.twig' %}
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+        <footer>
+            <p>&copy; {{ "now"|date("Y") }} EatSleepCode Ltd.</p>
+        </footer>
+
+        {#<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>#}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,55 @@
+body {
+    @include fontSize($defaultFontSize);
+    font-family: Helvetica, Verdana, sans-serif;
+    color: $textColour;
+}
+
+nav.primary, nav.secondary {
+    a { color: #FFF; }
+}
+nav.primary { background-color: $primaryColour; }
+nav.secondary { background-color: $secondaryColour; }
+
+/* --- Headings --- */
+
+h1, a { color: $secondaryColour; }
+
+/* --- Tables --- */
+
+table {
+    tr {
+        &.even { background-color: $grey; }
+        &.odd { background-color: #FFF; }
+    }
+    th {
+        background-color: $textColour;
+        color: #FFF;
+    }
+
+    input {
+        border: 1px solid $textColour;
+    }
+}
+
+form button {
+    color: #FFF;
+    background-color: #CB6015;
+    background-image: linear-gradient(bottom, $secondaryColour 27%, lighten($secondaryColour, 10%) 64%);
+    background-image: -o-linear-gradient(bottom, $secondaryColour 27%, lighten($secondaryColour, 10%) 64%);
+    background-image: -moz-linear-gradient(bottom, $secondaryColour 27%, lighten($secondaryColour, 10%) 64%);
+    background-image: -webkit-linear-gradient(bottom, $secondaryColour 27%, lighten($secondaryColour, 10%) 64%);
+    background-image: -ms-linear-gradient(bottom, $secondaryColour 27%, lighten($secondaryColour, 10%) 64%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.27, $secondaryColour), color-stop(0.64, lighten($secondaryColour, 10%)));
+
+    &:hover {
+        background-color: lighten($secondaryColour, 10%);
+        background-image: linear-gradient(bottom, lighten($secondaryColour, 10%) 27%, $secondaryColour 64%);
+        background-image: -o-linear-gradient(bottom, lighten($secondaryColour, 10%) 27%, $secondaryColour 64%);
+        background-image: -moz-linear-gradient(bottom, lighten($secondaryColour, 10%) 27%, $secondaryColour 64%);
+        background-image: -webkit-linear-gradient(bottom, lighten($secondaryColour, 10%) 27%, $secondaryColour 64%);
+        background-image: -ms-linear-gradient(bottom, lighten($secondaryColour, 10%) 27%, $secondaryColour 64%);
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.27, lighten($secondaryColour, 10%)), color-stop(0.64, $secondaryColour));
+    }
+}
+
+footer { color: $grey; }

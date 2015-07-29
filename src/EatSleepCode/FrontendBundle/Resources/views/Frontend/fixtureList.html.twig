@@ -1,0 +1,64 @@
+{% extends 'EatSleepCodeFrontendBundle::frontend.html.twig' %}
+
+{% block heading %}Match Day {{ matchDay }}{% endblock %}
+
+{% block content %}
+    <ul class="actions clearfix">
+        <li>{% if matchDay > 1 %}<a href="{{ path('fe_fixture_list', { matchDay: matchDay -1}) }}">&lt; Previous Week</a>{% endif %}</li>
+        <li>{% if matchDay != latestCompletedMatchday+1 %}<a href="{{ path('fe_fixture_list') }}">Current Week</a>{% endif %}</li>
+        <li>{% if matchDay < 38 %}<a href="{{ path('fe_fixture_list', { matchDay: matchDay +1}) }}">Next Week &gt;</a>{% endif %}</li>
+    </ul>
+
+    {{ form_start(form) }}
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <th class="left">Home</th>
+                <th colspan="3">&nbsp;</th>
+                <th class="left">Away</th>
+                <th>Prediction</th>
+                <th>Points</th>
+            </tr>
+            {% set predictionsAvailable = false %}
+            {% for fixture in fixtures %}
+                {% set canPredict = date(fixture.date)|date_modify("midnight") > date('today') %}
+                {% set predictionsAvailable = canPredict and (predictionsAvailable or not fixture.played) ? true : false %}
+                <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}">
+                    <td class="left">{{ fixture.homeTeam }}</td>
+                    <td class="noPadding" width="40">
+                        {% if fixture.played %}
+                            <label>{{ fixture.homeScore }}</label>
+                        {% elseif not canPredict %}
+                            <label>-</label>
+                        {% else %}
+                            <input type="text" name="fixture[{{ fixture.id }}][homeScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.homeScore : '' }}" />
+                        {% endif %}
+                    </td>
+                    <td>v</td>
+                    <td class="noPadding" width="40">
+                        {% if fixture.played %}
+                            <label>{{ fixture.awayScore }}</label>
+                        {% elseif not canPredict %}
+                            <label>-</label>
+                        {% else %}
+                            <input type="text" name="fixture[{{ fixture.id }}][awayScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.awayScore : '' }}" />
+                        {% endif %}
+                    </td>
+                    <td class="left">{{ fixture.awayTeam }}</td>
+
+                    {% if fixture.played %}
+                        <td>{{ fixture.prediction is defined ? fixture.prediction.homeScore ~ ' v ' ~ fixture.prediction.awayScore : '' }}</td>
+                        <td>{{ fixture.prediction is defined ? fixture.prediction.points : 0 }}</td>
+                    {% else %}
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        {% if predictionsAvailable %}
+            {{ form_row(form.save) }}
+        {% else %}
+            {% do form.save.setRendered %}
+        {% endif %}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Register{% endblock %}
+
+{% block heading %}Register for an account{% endblock %}
+
+{% block fos_user_content %}
+    <form action="{{ path('fos_user_registration_register') }}" method="post" autocomplete="off">
+
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword) }}
+        {{ form_rest(form) }}
+
+        <div class="formRow clearfix">
+            <button type="submit" class="right">{{ 'registration.submit'|trans }}</button>
+        </div>
+    </form>
+{% endblock fos_user_content %}

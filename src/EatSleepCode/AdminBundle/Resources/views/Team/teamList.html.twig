@@ -1,0 +1,15 @@
+{% extends 'EatSleepCodeAdminBundle::admin.html.twig' %}
+
+{% block title %}Admin | Teams{% endblock %}
+
+{% block heading %}Teams{% endblock %}
+
+{% block content %}
+    <p><a href="{{ path('team_download') }}">Download Teams</a></p>
+
+    <ul>
+        {% for team in teams %}
+            <li>{{ team.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

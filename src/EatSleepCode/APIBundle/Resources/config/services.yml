@@ -1,0 +1,4 @@
+services:
+    api_controller:
+        class: EatSleepCode\APIBundle\Controller\APIController
+        arguments: [@doctrine.orm.default_entity_manager]

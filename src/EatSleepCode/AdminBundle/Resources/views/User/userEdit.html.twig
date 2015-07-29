@@ -1,0 +1,9 @@
+{% extends 'EatSleepCodeAdminBundle::admin.html.twig' %}
+
+{% block title %}Admin | Users | {{ user.fullName }}{% endblock %}
+
+{% block heading %}Edit User: {{ user.fullName }}{% endblock %}
+
+{% block content %}
+    {{ form(form) }}
+{% endblock %}

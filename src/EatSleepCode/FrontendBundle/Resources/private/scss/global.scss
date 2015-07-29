@@ -1,0 +1,65 @@
+@import "variables";
+@import "mixins";
+@import "layout";
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    //outline: 1px solid black;
+}
+
+html { font-size: 62.5%; }
+
+body {
+    @include fontSize($defaultFontSize);
+    font-family: Helvetica, Verdana, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+}
+
+/* --- Headings --- */
+
+h1 {
+    height: 50px;
+    line-height: 50px;
+}
+
+/* --- Flash Messages --- */
+
+.flashSuccess {
+    @extend %flashMessage;
+    background-color: lighten($green, 50%);
+    border: 2px solid $green;
+    color: $green;
+}
+
+.flashInfo {
+    @extend %flashMessage;
+    background-color: lighten($yellow, 20%);
+    border: 2px solid $yellow;
+    color: #000;
+}
+
+.flashError {
+    @extend %flashMessage;
+    background-color: lighten($red, 50%);
+    border: 2px solid $red;
+    color: $red;
+
+    ul.errors li {
+        margin-top: 0;
+        color: $red;
+    }
+}
+
+/* --- Forms --- */
+
+button { @extend %button; }
+
+@import "colours";

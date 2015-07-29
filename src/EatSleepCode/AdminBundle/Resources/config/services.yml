@@ -1,0 +1,10 @@
+parameters:
+    football-data.api.config:
+        base_uri: "http://api.football-data.org"
+        headers:
+            X-Auth-Token: "fea728884269436b91c4a29fbf93cb3e"
+
+services:
+    api_client:
+        class: GuzzleHttp\Client
+        arguments: [%football-data.api.config%]

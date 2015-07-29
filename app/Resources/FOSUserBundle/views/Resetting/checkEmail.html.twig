@@ -1,0 +1,11 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Check your email | Password reset{% endblock %}
+
+{% block heading %}Check your email{% endblock %}
+
+{% block fos_user_content %}
+    <div class="flashSuccess">{{ 'resetting.check_email'|trans({'%email%': email}) }}</div>
+{% endblock %}
