@@ -1,6 +1,7 @@
-@mixin fontSize($size: $defaultFontSize) {
+@mixin fontSize($size: $defaultFontSize, $useEM: false) {
     font-size: $size+px;
-    font-size: ($size/10)+rem;
+    @if $useEM { font-size: ($size/10)+em; }
+    @else { font-size: ($size/10)+rem; }
 }
 
 @mixin size($width, $height: $width) {

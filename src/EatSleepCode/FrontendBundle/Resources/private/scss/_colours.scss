@@ -1,8 +1,4 @@
-body {
-    @include fontSize($defaultFontSize);
-    font-family: Helvetica, Verdana, sans-serif;
-    color: $textColour;
-}
+body { color: $textColour; }
 
 nav.primary, nav.secondary {
     a { color: #FFF; }
