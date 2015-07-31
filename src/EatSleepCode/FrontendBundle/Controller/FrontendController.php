@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class FrontendController extends Controller {
 
     /**
-     * @Route("/")
+     * @Route("/", name="fe_homepage")
      * @Security("has_role('ROLE_USER')")
      */
     public function homepageAction() {
