@@ -70,7 +70,7 @@ class APIController extends Controller {
     public function postPredictionAction(Request $request, User $user) {
         $predictions = json_decode($request->getContent());
         foreach ($predictions as $prediction) {
-            if ($prediction->homeScore != "") {
+            if (ctype_digit($prediction->homeScore) && ctype_digit($prediction->awayScore)) {
                 //check that fixture exists and has not been played
                 $fixture = $this->entityManager->getRepository('EatSleepCodeAPIBundle:Fixture')->findOneById($prediction->fixture);
                 //also check that the fixture isn't playing today or later
