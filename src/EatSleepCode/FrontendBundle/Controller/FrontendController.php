@@ -11,6 +11,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class FrontendController extends Controller {
 
     /**
+     * @Route("/")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function homepageAction() {
+        return $this->redirectToRoute("fe_fixture_list");
+    }
+
+    /**
      * @Route("/fixtures/{matchDay}", name="fe_fixture_list", defaults={"matchDay" = 0})
      * @Template
      * @Security("has_role('ROLE_USER')")
