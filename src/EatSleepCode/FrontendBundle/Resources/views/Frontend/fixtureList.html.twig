@@ -30,7 +30,7 @@
                         {% elseif not canPredict %}
                             <label>-</label>
                         {% else %}
-                            <input type="text" name="fixture[{{ fixture.id }}][homeScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.homeScore : '' }}" />
+                            <input type="text" onkeypress="return numericRestriction(event)" name="fixture[{{ fixture.id }}][homeScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.homeScore : '' }}" />
                         {% endif %}
                     </td>
                     <td>v</td>
@@ -40,7 +40,7 @@
                         {% elseif not canPredict %}
                             <label>-</label>
                         {% else %}
-                            <input type="text" name="fixture[{{ fixture.id }}][awayScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.awayScore : '' }}" />
+                            <input type="text" onkeypress="return numericRestriction(event)" name="fixture[{{ fixture.id }}][awayScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.awayScore : '' }}" />
                         {% endif %}
                     </td>
                     <td class="left">{{ fixture.awayTeam }}</td>
@@ -61,4 +61,10 @@
             {% do form.save.setRendered %}
         {% endif %}
     {{ form_end(form) }}
+
+    <script>
+        function numericRestriction(event) {
+            return event.charCode >= 48 && event.charCode <= 57
+        }
+    </script>
 {% endblock %}

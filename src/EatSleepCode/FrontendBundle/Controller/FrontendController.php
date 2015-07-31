@@ -67,11 +67,16 @@ class FrontendController extends Controller {
     public function standingsAction() {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery("
-            SELECT CONCAT(u.firstName, ' ', u.lastName) AS user, COUNT(p.id) AS predictions, SUM(CASE p.points WHEN 1 THEN 1 ELSE 0 END) AS correct, SUM(CASE p.points WHEN 3 THEN 1 ELSE 0 END) AS exact, SUM(p.points) AS points
+            SELECT CONCAT(u.firstName, ' ', u.lastName) AS user,
+            COUNT(p.id) AS predictions,
+            SUM(CASE p.points WHEN 1 THEN 1 ELSE 0 END) AS correct,
+            SUM(CASE p.points WHEN 3 THEN 1 ELSE 0 END) AS exact,
+            SUM(CASE p.points WHEN 0 THEN 1 ELSE 0 END) AS wrong,
+            SUM(p.points) AS points
             FROM EatSleepCodeAPIBundle:User u
             LEFT JOIN EatSleepCodeAPIBundle:Prediction p WITH p.user = u.id
             GROUP BY u.id
-            ORDER BY points DESC"
+            ORDER BY points DESC, user ASC"
         );
         return array(
             'standings' => $query->getResult(),
