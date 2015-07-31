@@ -78,6 +78,7 @@ doctrine:
 swiftmailer:
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
+    port:      "%mailer_port%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
@@ -92,7 +93,7 @@ fos_user:
         mailer: fos_user.mailer.twig_swift
 
     from_email:
-        address: "noreply@esc-football.local"
+        address: "predictions@eat-sleep-code.co.uk"
         sender_name: "ESC Football Predictions"
 
     registration:
