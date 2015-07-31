@@ -12,7 +12,7 @@
     {{ form_start(form) }}
         <table cellspacing="0" cellpadding="0" border="0">
             <tr>
-                <th class="left">Home</th>
+                <th class="right">Home</th>
                 <th colspan="3">&nbsp;</th>
                 <th class="left">Away</th>
                 <th>Prediction</th>
@@ -23,7 +23,7 @@
                 {% set canPredict = date(fixture.date)|date_modify("midnight") > date('today') %}
                 {% set predictionsAvailable = canPredict and (predictionsAvailable or not fixture.played) ? true : false %}
                 <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}">
-                    <td class="left">{{ fixture.homeTeam }}</td>
+                    <td class="right">{{ fixture.homeTeam }}</td>
                     <td class="noPadding" width="40">
                         {% if fixture.played %}
                             <label>{{ fixture.homeScore }}</label>

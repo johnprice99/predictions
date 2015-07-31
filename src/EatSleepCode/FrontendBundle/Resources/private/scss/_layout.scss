@@ -79,6 +79,7 @@ table {
     th, td {
         padding: 8px;
         &.left { float: none; text-align: left; }
+        &.right { float: none; text-align: right; }
         &.noPadding { padding: 0 !important; }
     }
     td { text-align: center; }
