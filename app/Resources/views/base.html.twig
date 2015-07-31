@@ -30,7 +30,7 @@
                     </ul>
                 </nav>
 
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if app.user is not null and is_granted('ROLE_ADMIN') %}
                     <nav class="secondary">
                         <ul>
                             <li><a href="{{ path('team_list') }}">Teams</a></li>
