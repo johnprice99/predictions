@@ -2,9 +2,9 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block title %}Reset password{% endblock %}
+{% block title %}Enter your new password | Forgotten password{% endblock %}
 
-{% block heading %}Reset password{% endblock %}
+{% block heading %}Enter your new password{% endblock %}
 
 {% block fos_user_content %}
     <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
