@@ -1,22 +1,23 @@
-{% extends 'EatSleepCodeFrontendBundle::frontend.html.twig' %}
+{% extends 'EatSleepCodeFrontendBundle:League:base.html.twig' %}
 
-{% block title %}Standings{% endblock %}
-{% block heading %}Latest Standings{% endblock %}
+{% block title %}{{ league.name }} | Standings{% endblock %}
+{% block heading %}{{ league.name }}{% endblock %}
 
-{% block content %}
+{% block leagueContent %}
     <table cellspacing="0" cellpadding="0" border="0">
         <tr>
             <th>Position</th>
-            <th class="left">Name</th>
+            <th class="left">&nbsp;</th>
             <th>Total Predictions</th>
             <th>Exact Result</th>
             <th>Correct Winner</th>
             <th>Wrong</th>
             <th>Points</th>
         </tr>
-        {% for row in standings %}
-            <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}">
+        {% for row in league.standings %}
+            <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}{% if app.user is not null and row.userId == app.user.id %} bold{% endif %}">
                 <td>{{ loop.index }}</td>
+                {#<td width="30"><div class="avatar small" style="background-image:url({{ row.avatar }})"></div></td>#}
                 <td class="left">{{ row.user }}</td>
                 <td>{{ row.predictions }}</td>
                 <td>{{ row.exact }}</td>

@@ -10,7 +10,7 @@ use EatSleepCode\APIBundle\Entity\Fixture;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Route("/admin/fixtures")
+ * @Route("/fixtures")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class FixtureController extends Controller {

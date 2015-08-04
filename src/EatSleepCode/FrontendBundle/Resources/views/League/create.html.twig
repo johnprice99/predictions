@@ -1,0 +1,12 @@
+{% extends 'EatSleepCodeFrontendBundle:League:base.html.twig' %}
+
+{% block title %}Create a league | leagues{% endblock %}
+{% block heading %}Create a league{% endblock %}
+
+{% block leagueContent %}
+    <section class="formContent">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

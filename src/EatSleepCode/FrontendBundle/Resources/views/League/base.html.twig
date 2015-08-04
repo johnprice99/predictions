@@ -1,0 +1,46 @@
+{% extends 'EatSleepCodeFrontendBundle::frontend.html.twig' %}
+
+{% block secondaryNav %}
+    {% include 'EatSleepCodeFrontendBundle:League:nav.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    {% if app.user is not null %}
+        <nav class="">
+            <h2>My leagues</h2>
+
+            <ul>
+                <li><a href="{{ path('fe_league_table') }}">ESC Global</a></li>
+            </ul>
+
+            <h3>Owner</h3>
+            <ul>
+                {% for league in myLeagues %}
+                    <li><a href="{{ path('fe_league_table', {'leagueId' : league.id}) }}">{{ league.name }}</a></li>
+                {% endfor %}
+                <li><a href="{{ path('fe_create_league') }}">Create new league</a></li>
+            </ul>
+            <h3>Participant</h3>
+            <ul>
+                {% for league in app.user.leagues %}
+                    {% if league.owner != app.user %}
+                        <li><a href="{{ path('fe_league_table', {'leagueId' : league.id}) }}">{{ league.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li><a href="{{ path('fe_join_league') }}">Join a league</a></li>
+            </ul>
+        </nav>
+
+        {% if league is defined %}
+            {% if leagueId != 0 and league.ownerId != app.user.id %}
+                <a href="{{ path('fe_leave_league', {'leagueId' : leagueId}) }}">Leave this league</a>
+            {% elseif league.ownerId == app.user.id %}
+                <p>Join Code: {{ league.code }}</p>
+                <a href="{{ path('fe_edit_league', {'leagueId' : leagueId}) }}">Edit league</a>
+                <a href="{{ path('fe_delete_league', {'leagueId' : leagueId}) }}">Delete league</a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% block leagueContent %}{% endblock %}
+{% endblock %}

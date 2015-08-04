@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin/users")
+ * @Route("/users")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends BaseController {

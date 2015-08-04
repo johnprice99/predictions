@@ -10,7 +10,7 @@ use EatSleepCode\APIBundle\Entity\Team;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Route("/admin/teams")
+ * @Route("/teams")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class TeamController extends Controller {

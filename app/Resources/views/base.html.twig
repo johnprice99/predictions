@@ -17,7 +17,10 @@
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <li><a href="{{ path('fe_fixture_list') }}">Fixtures</a></li>
                         {% endif %}
-                        <li><a href="{{ path('fe_standings') }}">Standings</a></li>
+                        <li><a href="{{ path('fe_league_table') }}">Leagues</a></li>
+                        {#{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
+                            {#<li><a href="{{ path('fe_league_list') }}">Leagues</a></li>#}
+                        {#{% endif %}#}
                     </ul>
                     <ul class="right">
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -30,13 +33,16 @@
                     </ul>
                 </nav>
 
-                {% if app.user is not null and is_granted('ROLE_ADMIN') %}
+                {% if app.user is not null %}
                     <nav class="secondary">
                         <ul>
-                            <li><a href="{{ path('team_list') }}">Teams</a></li>
-                            <li><a href="{{ path('fixture_list') }}">Fixtures</a></li>
-                            <li><a href="{{ path('user_list') }}">Users</a></li>
-                            <li><a href="{{ path('setting_list') }}">Settings</a></li>
+                            {% block secondaryNav %}{% endblock %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ path('team_list') }}">Teams</a></li>
+                                <li><a href="{{ path('fixture_list') }}">Fixtures</a></li>
+                                <li><a href="{{ path('user_list') }}">Users</a></li>
+                                <li><a href="{{ path('setting_list') }}">Settings</a></li>
+                            {% endif %}
                         </ul>
                     </nav>
                 {% endif %}
@@ -44,7 +50,7 @@
                 <div class="clearfix">
                     <h1 class="left">{% block heading %}{% endblock %}</h1>
                     {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <div id="avatar" style="background-image:url({{ app.user.getAvatarURL(50) }})" class="right"></div>
+                        <div style="background-image:url({{ app.user.getAvatarURL(50) }})" class="avatar right"></div>
                     {% endif %}
                 </div>
             </header>

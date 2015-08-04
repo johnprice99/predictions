@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Route("/admin/settings")
+ * @Route("/settings")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class SettingController extends Controller {

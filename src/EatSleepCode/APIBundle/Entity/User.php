@@ -12,23 +12,22 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User extends BaseUser {
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="Idea", mappedBy="user")
-//     */
-//    protected $predictions;
+    /**
+     * @ORM\ManyToMany(targetEntity="League", mappedBy="entrants")
+     */
+    protected $leagues;
 
     public function __construct() {
         parent::__construct();
-//        $this->roles = array('ROLE_ADMIN');
-//        $this->predictions = new ArrayCollection();
+        $this->leagues = new ArrayCollection();
     }
 
-//    public function getPredictions() {
-//        return $this->predictions;
-//    }
-//
-//    public function setPredictions($predictions) {
-//        $this->predictions = $predictions;
-//    }
-//
+    public function setLeagues($leagues) {
+        $this->leagues = $leagues;
+    }
+
+    public function getLeagues() {
+        return $this->leagues;
+    }
+
 }

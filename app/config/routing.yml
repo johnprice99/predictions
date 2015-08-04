@@ -6,12 +6,12 @@ esc_frontend:
 escapi:
     resource: "@EatSleepCodeAPIBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /api/
 
 esc_admin:
     resource: "@EatSleepCodeAdminBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /admin/
 
 eatsleepcode_user:
     resource: "@EatSleepCodeUserBundle/Controller/"

@@ -16,6 +16,7 @@ table {
     tr {
         &.even { background-color: $grey; }
         &.odd { background-color: #FFF; }
+        &.bold { color: $secondaryColour; }
     }
     th {
         background-color: $textColour;

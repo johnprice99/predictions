@@ -112,11 +112,11 @@ class User extends BaseUser {
 		return $this->profilePictureFile;
 	}
 
-	public function getAvatarURL() {
+	public function getAvatarURL($size=100) {
 		if ($this->getProfilePicturePath() !== null) {
 			return 'http://localhost/ideaapp/web/uploads/avatars/' . $this->getId() . '/' . $this->getProfilePicturePath();
 		}
-		return $this->getGravatarURL(100);
+		return $this->getGravatarURL($size);
 	}
 
 	public function getGravatarURL($size=100) {
