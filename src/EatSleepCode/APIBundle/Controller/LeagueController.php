@@ -143,13 +143,13 @@ class LeagueController extends APIController {
         //check that the league exists
         $league = $this->entityManager->getRepository('EatSleepCodeAPIBundle:League')->findOneById($leagueId);
         if ($league != null) {
+            //check that the user isn't the owner
+            if ($league->getOwner() === $user) {
+                return $this->_badRequest("The owner cannot leave the league");
+            }
             if (!$league->hasEntrant($user)) {
                 return $this->_badRequest("User is not in this league");
             }
-            if ($league->getOwner() == $user) {
-                return $this->_badRequest("The owner cannot leave the league");
-            }
-            //check that the user isn't the owner
             $league->removeEntrant($user);
             $this->entityManager->persist($league);
             $this->entityManager->flush();
@@ -159,12 +159,37 @@ class LeagueController extends APIController {
     }
 
     /**
+     * @Route("/{leagueId}/kick/{userId}", name="api_league_kick_user", requirements={"leagueId": "\d+", "userId": "\d+"})
+     * @Method({"POST"})
+     */
+    public function kickAction($leagueId, $userId) {
+        //check that the league exists
+        $league = $this->entityManager->getRepository('EatSleepCodeAPIBundle:League')->findOneById($leagueId);
+        if ($league != null) {
+            //check that the logged in user owns the league
+            $user =  $this->entityManager->getRepository('EatSleepCodeAPIBundle:User')->findOneById($userId);
+
+            //check that the user being removed isn't the owner
+            if ($league->getOwner() === $user) {
+                return $this->_badRequest("The owner cannot be kicked from this league");
+            }
+            //check that the user is part of that league
+            if (!$league->hasEntrant($user)) {
+                return $this->_badRequest("User is not in this league");
+            }
+            $league->removeEntrant($user);
+            $this->entityManager->persist($league);
+            $this->entityManager->flush();
+            return $this->_JSONResponse(array('message' => 'The user has been kicked from the league'));
+        }
+        return $this->_notFound();
+    }
+
+    /**
      * @Route("/{leagueId}/standings", name="api_league_standings", requirements={"leagueId": "\d+"})
      * @Method({"GET"})
      */
-    public function leagueStandingsAction($leagueId = 0) {
-        $user =  $this->entityManager->getRepository('EatSleepCodeAPIBundle:User')->findOneById(1);
-
+    public function leagueStandingsAction($leagueId = 0, User $user) {
         //check that the league exists
         $league = $this->entityManager->getRepository('EatSleepCodeAPIBundle:League')->findOneById($leagueId);
         if ($leagueId == 0 || $league != null) {
@@ -179,6 +204,7 @@ class LeagueController extends APIController {
                     array(
                         "u.id as userId",
                         "CONCAT(u.firstName, ' ', u.lastName) AS user",
+                        "CONCAT('http://www.gravatar.com/avatar/', MD5(LOWER(TRIM(u.email))), '?s=100&d=mm') AS avatar",
                         "COUNT(p.id) AS predictions",
                         "SUM(CASE p.points WHEN 1 THEN 1 ELSE 0 END) AS correct",
                         "SUM(CASE p.points WHEN 3 THEN 1 ELSE 0 END) AS exact",
@@ -195,7 +221,7 @@ class LeagueController extends APIController {
 
             return $this->_JSONResponse(array(
                 'ownerId' => $leagueId != 0 ? $league->getOwner()->getId() : null,
-                'name' => $leagueId == 0 ? 'ESC Global' : $league->getName(),
+                'name' => $leagueId == 0 ? 'ESC Global League' : $league->getName(),
                 'code' => $leagueId != 0 ? $league->getCode() : null,
                 'standings' => $qb->getQuery()->getResult()
             ));

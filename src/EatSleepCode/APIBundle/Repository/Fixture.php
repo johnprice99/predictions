@@ -10,7 +10,8 @@ class Fixture extends EntityRepository {
         return $this->createQueryBuilder('f')
             ->where('f.matchDay = ' . $matchDay)
             ->leftJoin('f.homeTeam','h')
-            ->orderBy('h.name', 'asc')
+            ->orderBy('f.date', 'asc')
+            ->addOrderBy('h.name', 'asc')
             ->getQuery()
             ->getResult();
     }

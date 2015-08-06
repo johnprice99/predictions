@@ -29,6 +29,7 @@
 /web/bundles/
 /web/uploads/
 /web/css/
+/web/js/
 /src/EatSleepCode/FrontendBundle/Resources/public/css/*
 
 # PHPUnit

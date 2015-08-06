@@ -13,12 +13,4 @@ class FrontendController extends Controller {
         return new Request(array(), array(), array(), array(), array(), $_SERVER, json_encode($content));
     }
 
-    /**
-     * @Route("/", name="fe_homepage")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function homepageAction() {
-        return $this->redirectToRoute("fe_fixture_list");
-    }
-
 }

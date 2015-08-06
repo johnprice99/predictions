@@ -1,0 +1,13 @@
+{% extends 'EatSleepCodeFrontendBundle::frontend.html.twig' %}
+
+{% block title %}Invite your friends{% endblock %}
+
+{% block heading %}Invite your friends{% endblock %}
+
+{% block content %}
+    <section class="formContent">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

@@ -3,7 +3,9 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
         <title>{% block title %}{% endblock %} | EatSleepCode predictions</title>
+        {% block socialMeta %}{% endblock %}
         {% stylesheets 'bundles/eatsleepcodefrontend/css/global.css' filter='cssrewrite,?uglifycss' output='css/predictions.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
@@ -16,11 +18,9 @@
                     <ul class="left">
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <li><a href="{{ path('fe_fixture_list') }}">Fixtures</a></li>
+                            <li><a href="{{ path('fe_league_table') }}">Leagues</a></li>
+                            {#<li><a href="{{ path('fe_invite') }}">Invite a Friend</a></li>#}
                         {% endif %}
-                        <li><a href="{{ path('fe_league_table') }}">Leagues</a></li>
-                        {#{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-                            {#<li><a href="{{ path('fe_league_list') }}">Leagues</a></li>#}
-                        {#{% endif %}#}
                     </ul>
                     <ul class="right">
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -60,10 +60,12 @@
             </div>
         </section>
         <footer>
+            {% block footerLinks %}{% endblock %}
+
             <p>&copy; {{ "now"|date("Y") }} EatSleepCode Ltd.</p>
         </footer>
 
-        {#<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>#}
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

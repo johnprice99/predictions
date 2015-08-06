@@ -25,7 +25,7 @@ class PredictionController extends APIController {
                 $fixture = $this->entityManager->getRepository('EatSleepCodeAPIBundle:Fixture')->findOneById($prediction->fixture);
                 //also check that the fixture isn't playing today or later
                 $today = new \DateTime();
-                if ($fixture->getHomeScore() < 0 && $fixture->getDate()->setTime(0,0) > $today) {
+                if ($fixture->getHomeScore() < 0 && $fixture->getDate()->setTimezone(new \DateTimeZone('Europe/London'))->setTime(0,0) > $today->setTimezone(new \DateTimeZone('Europe/London'))) {
                     //check if prediction exists - if so, update else add
                     $existingPrediction = $this->entityManager->getRepository('EatSleepCodeAPIBundle:Prediction')->findOneBy(
                         array('fixture' => $fixture, 'user' => $user)

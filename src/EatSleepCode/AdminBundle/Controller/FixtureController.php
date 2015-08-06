@@ -52,13 +52,13 @@ class FixtureController extends Controller {
                         $newFixture->setAwayScore($fixture->result->goalsAwayTeam);
                         $em->persist($newFixture);
                     }
-                    elseif ($fixture->result->goalsHomeTeam >= 0) {
+                    elseif ($fixture->result->goalsHomeTeam >= 0) { //match has been played
                         $existingFixture->setPlayed(true);
                         $existingFixture->setHomeScore($fixture->result->goalsHomeTeam);
                         $existingFixture->setAwayScore($fixture->result->goalsAwayTeam);
                         $em->persist($existingFixture);
 
-                        //update any predictions for this fixture
+                        //score any predictions for this fixture
                         $pointQueries = array(
                             'UPDATE EatSleepCodeAPIBundle:Prediction p SET p.points = 3 WHERE p.homeScore = :homeScore AND p.awayScore = :awayScore AND p.fixture = :fixture',
                             'UPDATE EatSleepCodeAPIBundle:Prediction p SET p.points = 1 WHERE ((p.homeScore > p.awayScore AND :homeScore > :awayScore) OR (p.homeScore < p.awayScore AND :homeScore < :awayScore) OR (p.homeScore = p.awayScore AND :homeScore = :awayScore)) AND p.fixture = :fixture AND p.points IS NULL',
@@ -74,6 +74,10 @@ class FixtureController extends Controller {
 
                         //this game has been played, so set the current week
                         $latestMatchdayUpdated = $existingFixture->getMatchDay();
+                    }
+                    elseif (strtotime($fixture->date) != $existingFixture->getDate()->getTimestamp()) { //update the date
+                        $existingFixture->setDate($fixture->date);
+                        $em->persist($existingFixture);
                     }
                 }
             }

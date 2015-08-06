@@ -12,51 +12,62 @@
     </ul>
 
     {{ form_start(form) }}
+        {% set predictionsAvailable = false %}
         <table cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <th class="right">Home</th>
-                <th colspan="3">&nbsp;</th>
-                <th class="left">Away</th>
-                <th>Prediction</th>
-                <th>Points</th>
-            </tr>
-            {% set predictionsAvailable = false %}
-            {% for fixture in fixtures %}
-                {% set canPredict = date(fixture.date)|date_modify("midnight") > date('today') %}
-                {% set predictionsAvailable = canPredict and (predictionsAvailable or not fixture.played) ? true : false %}
-                <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}">
-                    <td class="right">{{ fixture.homeTeam }}</td>
-                    <td class="noPadding" width="40">
-                        {% if fixture.played %}
-                            <label>{{ fixture.homeScore }}</label>
-                        {% elseif not canPredict %}
-                            <label>-</label>
-                        {% else %}
-                            <input type="text" onkeypress="return numericRestriction(event)" name="fixture[{{ fixture.id }}][homeScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.homeScore : '' }}" />
-                        {% endif %}
-                    </td>
-                    <td>v</td>
-                    <td class="noPadding" width="40">
-                        {% if fixture.played %}
-                            <label>{{ fixture.awayScore }}</label>
-                        {% elseif not canPredict %}
-                            <label>-</label>
-                        {% else %}
-                            <input type="text" onkeypress="return numericRestriction(event)" name="fixture[{{ fixture.id }}][awayScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.awayScore : '' }}" />
-                        {% endif %}
-                    </td>
-                    <td class="left">{{ fixture.awayTeam }}</td>
 
-                    {% if fixture.played %}
-                        <td>{{ fixture.prediction is defined ? fixture.prediction.homeScore ~ ' v ' ~ fixture.prediction.awayScore : '' }}</td>
-                        <td>{{ fixture.prediction is defined ? fixture.prediction.points : 0 }}</td>
-                    {% else %}
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    {% endif %}
+            {% for days in fixtures %}
+                <tr>
+                    <td class="left" colspan="7">
+                        <h2>{{ days.date|date('l, jS F Y') }}</h2>
+                    </td>
                 </tr>
+                <tr>
+                    <th class="left">Time</th>
+                    <th class="right" width="30%">Home</th>
+                    <th colspan="3">&nbsp;</th>
+                    <th class="left" width="30%">Away</th>
+                    <th>Prediction</th>
+                    <th>Points</th>
+                </tr>
+                {% for fixture in days.fixtures %}
+                    {% set canPredict = date(fixture.date)|date_modify("midnight") > date('today') %}
+                    {% set predictionsAvailable = canPredict and (predictionsAvailable or not fixture.played) ? true : false %}
+                    <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}">
+                        <td class="left">{{ fixture.date|date('H:i') }}</td>
+                        <td class="right">{{ fixture.homeTeam }}</td>
+                        <td class="noPadding" width="40">
+                            {% if fixture.played %}
+                                <label>{{ fixture.homeScore }}</label>
+                            {% elseif not canPredict %}
+                                <label>-</label>
+                            {% else %}
+                                <input type="text" onkeypress="return numericRestriction(event)" name="fixture[{{ fixture.id }}][homeScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.homeScore : '' }}" />
+                            {% endif %}
+                        </td>
+                        <td>v</td>
+                        <td class="noPadding" width="40">
+                            {% if fixture.played %}
+                                <label>{{ fixture.awayScore }}</label>
+                            {% elseif not canPredict %}
+                                <label>-</label>
+                            {% else %}
+                                <input type="text" onkeypress="return numericRestriction(event)" name="fixture[{{ fixture.id }}][awayScore]" maxlength="2" value="{{ fixture.prediction is defined ? fixture.prediction.awayScore : '' }}" />
+                            {% endif %}
+                        </td>
+                        <td class="left">{{ fixture.awayTeam }}</td>
+
+                        {% if fixture.played %}
+                            <td>{{ fixture.prediction is defined ? fixture.prediction.homeScore ~ ' v ' ~ fixture.prediction.awayScore : '' }}</td>
+                            <td>{{ fixture.prediction is defined ? fixture.prediction.points : 0 }}</td>
+                        {% else %}
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
             {% endfor %}
         </table>
+
         {% if predictionsAvailable %}
             {{ form_row(form.save) }}
         {% else %}

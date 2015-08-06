@@ -25,3 +25,10 @@ monolog:
             level: debug
         console:
             type:  console
+
+# Assetic Configuration
+assetic:
+    filters:
+        uglifyjs2:
+            bin: /usr/local/bin/uglifyjs
+            apply_to: "\.js"

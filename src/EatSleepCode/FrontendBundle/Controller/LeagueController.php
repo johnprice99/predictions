@@ -18,6 +18,7 @@ class LeagueController extends FrontendController {
     /**
      * @Route("/league/table/{leagueId}", name="fe_league_table", requirements={"leagueId": "\d+"})
      * @Template
+     * @Security("has_role('ROLE_USER')")
      */
     public function tableAction($leagueId = 0) {
         $response = $this->get('api_league_controller')->leagueStandingsAction($leagueId, $this->getUser());
@@ -45,6 +46,7 @@ class LeagueController extends FrontendController {
     /**
      * @Route("/league/create", name="fe_create_league")
      * @Template
+     * @Security("has_role('ROLE_USER')")
      */
     public function createAction(Request $request) {
         $form = $this->createForm(new LeagueForm());
@@ -77,6 +79,7 @@ class LeagueController extends FrontendController {
     /**
      * @Route("/league/edit/{leagueId}", name="fe_edit_league", requirements={"leagueId": "\d+"})
      * @Template
+     * @Security("has_role('ROLE_USER')")
      */
     public function editAction($leagueId, Request $request) {
         $response = $this->get('api_league_controller')->getLeagueAction($leagueId, $this->getUser());
@@ -124,6 +127,7 @@ class LeagueController extends FrontendController {
     /**
      * @Route("/league/delete/{leagueId}", name="fe_delete_league", requirements={"leagueId": "\d+"})
      * @Template
+     * @Security("has_role('ROLE_USER')")
      */
     public function deleteAction($leagueId) {
         $response = $this->get('api_league_controller')->deleteLeagueAction($leagueId, $this->getUser());
@@ -148,6 +152,7 @@ class LeagueController extends FrontendController {
     /**
      * @Route("/league/join", name="fe_join_league")
      * @Template
+     * @Security("has_role('ROLE_USER')")
      */
     public function joinAction(Request $request) {
         $form = $this->createForm(new JoinLeagueForm());
@@ -183,7 +188,7 @@ class LeagueController extends FrontendController {
 
     /**
      * @Route("/league/leave/{leagueId}", name="fe_leave_league", requirements={"leagueId": "\d+"})
-     * @Template
+     * @Security("has_role('ROLE_USER')")
      */
     public function leaveAction($leagueId) {
         $result = $this->get('api_league_controller')->leaveLeagueAction($leagueId, $this->getUser());
@@ -199,6 +204,24 @@ class LeagueController extends FrontendController {
                 break;
         }
         return $this->redirectToRoute('fe_league_table', $redirectParams);
+    }
+
+    /**
+     * @Route("/league/kick/{leagueId}/{userId}", name="fe_league_kick_user", requirements={"leagueId": "\d+", "userId": "\d+"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function kickAction($leagueId, $userId) {
+        $result = $this->get('api_league_controller')->kickAction($leagueId, $userId);
+
+        switch ($result->getStatusCode()) {
+            case 200:
+                $this->addFlash('success', 'This user has been kicked from your league');
+                break;
+            default:
+                $this->addFlash('error', json_decode($result->getContent())->message);
+                break;
+        }
+        return $this->redirectToRoute('fe_league_table', array('leagueId' => $leagueId));
     }
 
 }

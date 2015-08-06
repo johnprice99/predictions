@@ -19,7 +19,6 @@ class FixtureController extends APIController {
     public function fixtureListAction($matchDay, User $user) {
         $fixtures = array();
         foreach ($this->entityManager->getRepository('EatSleepCodeAPIBundle:Fixture')->findAllByMatchDayOrderedByHomeTeam($matchDay) as $fixture) {
-
             $myPrediction = $this->entityManager->getRepository('EatSleepCodeAPIBundle:Prediction')->findOneBy(
                 array('fixture' => $fixture, 'user' => $user)
             );
@@ -29,7 +28,7 @@ class FixtureController extends APIController {
                 'awayTeam' => $fixture->getAwayTeam()->getName(),
                 'homeScore' => null,
                 'awayScore' => null,
-                'date' => $fixture->getDate()->format('Y-m-d H:i:s'),
+                'date' => $fixture->getDate()->setTimezone(new \DateTimeZone('Europe/London'))->format('Y-m-d H:i:s'),
                 'played' => $fixture->getPlayed(),
             );
             if ($fixture->getPlayed()) {
@@ -43,9 +42,17 @@ class FixtureController extends APIController {
                     'points' => $myPrediction->getPoints(),
                 );
             }
-            $fixtures[] = $f;
+            $fixtures[$fixture->getDate()->format('Y-m-d')][] = $f;
         }
-        return $this->_JSONResponse($fixtures);
+
+        $orderedFixtures = array();
+        foreach ($fixtures as $date => $games) {
+            $orderedFixtures[] = array(
+                'date' => $date,
+                'fixtures' => $games,
+            );
+        }
+        return $this->_JSONResponse($orderedFixtures);
     }
 
 }

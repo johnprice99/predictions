@@ -28,7 +28,7 @@ table {
     }
 }
 
-form button {
+button {
     color: #FFF;
     background-color: #CB6015;
     background-image: linear-gradient(bottom, $secondaryColour 27%, lighten($secondaryColour, 10%) 64%);
@@ -50,3 +50,12 @@ form button {
 }
 
 footer { color: $grey; }
+
+aside {
+    .panel {
+        a.right {
+            color: $primaryColour;
+            &:hover { color: $secondaryColour; }
+        }
+    }
+}

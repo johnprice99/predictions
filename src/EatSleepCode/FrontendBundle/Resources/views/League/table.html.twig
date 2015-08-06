@@ -6,8 +6,8 @@
 {% block leagueContent %}
     <table cellspacing="0" cellpadding="0" border="0">
         <tr>
-            <th>Position</th>
-            <th class="left">&nbsp;</th>
+            <th>&nbsp;</th>
+            <th class="left" colspan="2">&nbsp;</th>
             <th>Total Predictions</th>
             <th>Exact Result</th>
             <th>Correct Winner</th>
@@ -17,8 +17,12 @@
         {% for row in league.standings %}
             <tr class="{{ loop.index % 2 ? 'odd' : 'even' }}{% if app.user is not null and row.userId == app.user.id %} bold{% endif %}">
                 <td>{{ loop.index }}</td>
-                {#<td width="30"><div class="avatar small" style="background-image:url({{ row.avatar }})"></div></td>#}
-                <td class="left">{{ row.user }}</td>
+                <td width="30"><div class="avatar small" style="background-image:url({{ row.avatar }})"></div></td>
+                <td class="left">{{ row.user }}
+                    {% if league is defined and row.userId != app.user.id and league.ownerId == app.user.id %}
+                        - <a href="{{ path('fe_league_kick_user', {'leagueId' : leagueId, 'userId' : row.userId}) }}" class="deleteButton" data-msg="Are you sure you want to kick this user from your league?">Kick user</a>
+                    {% endif %}
+                </td>
                 <td>{{ row.predictions }}</td>
                 <td>{{ row.exact }}</td>
                 <td>{{ row.correct }}</td>
@@ -27,4 +31,10 @@
             </tr>
         {% endfor %}
     </table>
+{% endblock %}
+
+{% block pageJS %}
+    {% javascripts '@EatSleepCodeFrontendBundle/Resources/private/js/common.js' output='js/league.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

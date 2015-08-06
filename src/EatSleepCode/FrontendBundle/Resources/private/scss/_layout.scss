@@ -25,14 +25,53 @@ nav.secondary {
     text-align:center;
 }
 
+main { width: 70%; }
+aside {
+    width: 30%;
+    padding-left: $defaultMarginSpacing/2;
+    .panel {
+        margin-bottom: $defaultMarginSpacing/2;
+        border: 1px solid $grey;
+        padding: $defaultMarginSpacing/2;
+
+        &:hover { box-shadow: 0 0 10px #888888; }
+
+        ul li {
+            border-top: 1px solid $grey;
+            margin-top:10px;
+        }
+
+        a {
+            display:block;
+            padding: 10px 0 0 0;
+
+            &.right {
+                font-weight: bold;
+                color: $primaryColour;
+                &:hover { color: $secondaryColour; }
+            }
+        }
+
+        &#joinPanel h3 {
+            @include fontSize(28);
+            color: $secondaryColour;
+            font-weight:bold;
+            text-align:center;
+            padding:0 0 $defaultMarginSpacing/2 0;
+        }
+    }
+}
+
 /* --- Headings --- */
 
+h1, h2, h3 { font-weight: normal; }
 h1 {
-    font-weight: normal;
     height: 50px;
     line-height: 50px;
     @include fontSize(32);
 }
+h2 { @include fontSize(20); }
+h3 { @include fontSize(18); }
 
 .avatar {
     display: inline-block;
@@ -41,6 +80,7 @@ h1 {
     @include size(50px);
 
     &.small { @include size(30px); }
+    &.large { @include size(100px); }
 }
 
 .pageWrap {
@@ -56,6 +96,15 @@ footer, .pageWrap:after { height: $footerHeight; }
 footer {
     padding: $defaultMarginSpacing $defaultMarginSpacing/2 0;
     text-align: right;
+
+    ul li {
+        height:20px;
+        display:inline-block;
+        overflow: hidden;
+        margin-right: 10px;
+        &.facebook { width:85px; }
+        &.twitter { width:78px; }
+    }
 }
 
 .content { padding: $defaultMarginSpacing/2; }
@@ -84,7 +133,7 @@ table {
         &.noPadding { padding: 0 !important; }
     }
     td { text-align: center; }
-    margin: $defaultMarginSpacing/2 0;
+    margin: 0 0 $defaultMarginSpacing/2 0;
 
     tr.bold { font-weight: bold; }
 
@@ -112,12 +161,17 @@ table {
         margin-bottom: $defaultMarginSpacing/4;
     }
 
-    input {
+    input, textarea {
         @include fontSize(16);
         border-radius: 8px;
         border:1px solid $grey;
         padding:10px;
     }
+    textarea {
+        width: 100%;
+        resize: none;
+    }
+
 
     button { float: right; }
 }

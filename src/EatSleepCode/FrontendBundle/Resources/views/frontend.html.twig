@@ -1,11 +1,60 @@
 {% extends 'base.html.twig' %}
 
+{% block socialMeta %}
+    <meta property="og:url" content="{{ app.request.getUri }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EatSleepCode Football Predictions Game" />
+    <meta property="og:description" content="Make predictions for the upcoming Premier League season and go head to head with your friends" />
+    {#<meta property="og:image" content="http://www.your-domain.com/path/image.jpg" />#}
+{% endblock %}
+
 {% block body %}
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.4";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                    t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="flash-notice">
             {{ flashMessage }}
         </div>
     {% endfor %}
 
-    {% block content %}{% endblock %}
+    <section class="clearfix">
+        {% block content %}{% endblock %}
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {% block pageJS %}{% endblock %}
+{% endblock %}
+
+{% block footerLinks %}
+    <ul class="left">
+        <li class="facebook"><div class="fb-share-button" data-href="https://predictions.eat-sleep-code.co.uk" data-layout="button_count"></div></li>
+        <li class="twitter"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Make your predictions&url=https://predictions.eat-sleep-code.co.uk&hashtags=FootballPredictions"></a></li>
+    </ul>
 {% endblock %}
