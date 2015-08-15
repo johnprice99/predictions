@@ -56,11 +56,15 @@
                         </td>
                         <td class="left">{{ fixture.awayTeam }}</td>
 
-                        {% if fixture.played %}
+                        {% if not canPredict %}
                             <td>{{ fixture.prediction is defined ? fixture.prediction.homeScore ~ ' v ' ~ fixture.prediction.awayScore : '' }}</td>
-                            <td>{{ fixture.prediction is defined ? fixture.prediction.points : 0 }}</td>
                         {% else %}
                             <td>&nbsp;</td>
+                        {% endif %}
+
+                        {% if fixture.played %}
+                            <td>{{ fixture.prediction is defined ? fixture.prediction.points : 0 }}</td>
+                        {% else %}
                             <td>&nbsp;</td>
                         {% endif %}
                     </tr>

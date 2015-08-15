@@ -19,7 +19,6 @@
                         {% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <li><a href="{{ path('fe_fixture_list') }}">Fixtures</a></li>
                             <li><a href="{{ path('fe_league_table') }}">Leagues</a></li>
-                            {#<li><a href="{{ path('fe_invite') }}">Invite a Friend</a></li>#}
                         {% endif %}
                     </ul>
                     <ul class="right">
@@ -41,7 +40,7 @@
                                 <li><a href="{{ path('team_list') }}">Teams</a></li>
                                 <li><a href="{{ path('fixture_list') }}">Fixtures</a></li>
                                 <li><a href="{{ path('user_list') }}">Users</a></li>
-                                <li><a href="{{ path('setting_list') }}">Settings</a></li>
+                                <li><a href="{{ path('admin_setting_list') }}">Settings</a></li>
                             {% endif %}
                         </ul>
                     </nav>
