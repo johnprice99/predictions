@@ -1,13 +1,13 @@
 services:
     api_fixture_controller:
         class: EatSleepCode\APIBundle\Controller\FixtureController
-        arguments: [@doctrine.orm.default_entity_manager]
+        arguments: [@service_container, @doctrine.orm.default_entity_manager]
     api_prediction_controller:
         class: EatSleepCode\APIBundle\Controller\PredictionController
-        arguments: [@doctrine.orm.default_entity_manager]
+        arguments: [@service_container, @doctrine.orm.default_entity_manager]
     api_league_controller:
         class: EatSleepCode\APIBundle\Controller\LeagueController
-        arguments: [@doctrine.orm.default_entity_manager]
+        arguments: [@service_container, @doctrine.orm.default_entity_manager]
 
     twig.controller.exception:
         class: EatSleepCode\APIBundle\Controller\ExceptionController

@@ -4,12 +4,14 @@ namespace EatSleepCode\APIBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class APIController extends Controller {
 
     protected $entityManager;
 
-    public function __construct($entityManager) {
+    public function __construct(ContainerInterface $container, $entityManager) {
+        $this->container = $container;
         $this->entityManager = $entityManager;
     }
 

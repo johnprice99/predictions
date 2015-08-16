@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new EatSleepCode\UserBundle\EatSleepCodeUserBundle(),
             new EatSleepCode\AdminBundle\EatSleepCodeAdminBundle(),
             new EatSleepCode\APIBundle\EatSleepCodeAPIBundle(),

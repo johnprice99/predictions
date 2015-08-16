@@ -16,7 +16,8 @@ class FixtureController extends APIController {
      * @Route("/{matchDay}", name="api_fixtures", requirements={"matchDay": "\d+"})
      * @Method({"GET"})
      */
-    public function fixtureListAction($matchDay, User $user) {
+    public function fixtureListAction($matchDay) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $fixtures = array();
         foreach ($this->entityManager->getRepository('EatSleepCodeAPIBundle:Fixture')->findAllByMatchDayOrderedByHomeTeam($matchDay) as $fixture) {
             $myPrediction = $this->entityManager->getRepository('EatSleepCodeAPIBundle:Prediction')->findOneBy(

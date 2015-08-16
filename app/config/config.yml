@@ -119,3 +119,12 @@ fos_user:
     change_password:
         form:
             type: eatsleepcode_user_change_password
+
+fos_oauth_server:
+    db_driver: orm
+    client_class: EatSleepCode\APIBundle\Entity\Client
+    access_token_class: EatSleepCode\APIBundle\Entity\AccessToken
+    refresh_token_class: EatSleepCode\APIBundle\Entity\RefreshToken
+    auth_code_class: EatSleepCode\APIBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_manager
