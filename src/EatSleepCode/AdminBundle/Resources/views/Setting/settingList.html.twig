@@ -5,6 +5,8 @@
 {% block heading %}Settings{% endblock %}
 
 {% block content %}
+    <p><a href="{{ path('admin_clear_stale_tokens') }}">Clear Stale Auth Tokens</a></p>
+
     <ul>
         {% for setting in settings %}
             <li>{{ setting.key }} - {{ setting.value }} - <a href="{{ path('admin_edit_setting', {id: setting.id}) }}">Edit</a></li>

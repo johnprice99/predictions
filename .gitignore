@@ -7,6 +7,7 @@
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
+*.iml
 
 ### Symfony template
 # Cache and logs (Symfony2)

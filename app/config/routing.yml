@@ -18,6 +18,10 @@ eatsleepcode_user:
     type:     annotation
     prefix:   /
 
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

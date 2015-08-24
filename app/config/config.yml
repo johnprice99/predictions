@@ -128,3 +128,8 @@ fos_oauth_server:
     auth_code_class: EatSleepCode\APIBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_manager
+
+nelmio_api_doc:
+    name: EatSleepCode Football Predictions API
+    sandbox:
+        enabled: false

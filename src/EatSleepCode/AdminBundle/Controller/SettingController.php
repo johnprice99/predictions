@@ -8,13 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use EatSleepCode\AdminBundle\Form\SettingForm;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 
 /**
  * @Route("/settings")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class SettingController extends Controller {
-
+    
     /**
      * @Route("/", name="admin_setting_list")
      * @Template
@@ -42,12 +44,24 @@ class SettingController extends Controller {
         if ($form->isValid()) {
             $em->persist($form->getData());
             $em->flush();
+            $this->addFlash('success', 'Settings saved');
             return $this->redirectToRoute('admin_edit_setting', array('id' => $id));
         }
 
         return array(
             'form' => $form->createView(),
         );
+    }
+
+    /**
+     * @Route("/tokens/clear}", name="admin_clear_stale_tokens")
+     */
+    public function clearStaleTokens() {
+        $application = new Application($this->get('kernel'));
+        $application->setAutoExit(false);
+        $application->run(new ArrayInput(array('command' => 'fos:oauth-server:clean')));
+        $this->addFlash('success', 'Stale tokens cleaned');
+        return $this->redirectToRoute('admin_setting_list');
     }
 
 }

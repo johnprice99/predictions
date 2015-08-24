@@ -20,7 +20,7 @@ class FixtureController extends FrontendController {
         if ($matchDay === 0) {
             $matchDay = $latestCompletedMatchday + 1;
         }
-        $allFixtures = json_decode($this->get('api_fixture_controller')->fixtureListAction($matchDay, $this->getUser())->getContent());
+        $allFixtures = json_decode($this->get('api_fixture_controller')->fixtureListAction($matchDay)->getContent());
 
         $form = $this->createForm(new PredictionsForm());
         $form->handleRequest($request);
@@ -32,7 +32,7 @@ class FixtureController extends FrontendController {
                 $myPredictions[] = $pred;
             }
             $post = $this->_createPOSTRequest($myPredictions);
-            $result = $this->get('api_prediction_controller')->postPredictionAction($post, $this->getUser());
+            $result = $this->get('api_prediction_controller')->postPredictionAction($post);
             if ($result->getStatusCode() === 200) {
                 $this->addFlash('success', 'Your predictions have been saved');
             }

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use EatSleepCode\APIBundle\Entity\User;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @Route("/fixtures", service="api_fixture_controller")
@@ -13,8 +14,25 @@ use EatSleepCode\APIBundle\Entity\User;
 class FixtureController extends APIController {
 
     /**
+     * Retrieve a list of fixtures that are set for a given match day.
+     *
      * @Route("/{matchDay}", name="api_fixtures", requirements={"matchDay": "\d+"})
      * @Method({"GET"})
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get a list of fixtures for the given match day",
+     *  requirements={
+     *      {
+     *          "name"="matchDay",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The match day of fixtures to retrieve"
+     *      }
+     *  },
+     *  statusCodes={
+     *      200="An array of fixtures for the given match day"
+     *  }
+     * )
      */
     public function fixtureListAction($matchDay) {
         $user = $this->get('security.token_storage')->getToken()->getUser();

@@ -12,7 +12,7 @@ use EatSleepCode\FrontendBundle\Form\JoinLeagueForm;
 class LeagueController extends FrontendController {
 
     private function _getLeagues() {
-        return json_decode($this->get('api_league_controller')->getMyLeaguesAction($this->getUser())->getContent());
+        return json_decode($this->get('api_league_controller')->getMyLeaguesAction()->getContent());
     }
 
     /**
@@ -21,7 +21,7 @@ class LeagueController extends FrontendController {
      * @Security("has_role('ROLE_USER')")
      */
     public function tableAction($leagueId = 0) {
-        $response = $this->get('api_league_controller')->leagueStandingsAction($leagueId, $this->getUser());
+        $response = $this->get('api_league_controller')->leagueStandingsAction($leagueId);
         switch ($response->getStatusCode()) {
             case 404:
                 throw $this->createNotFoundException();
@@ -56,7 +56,7 @@ class LeagueController extends FrontendController {
             $data = $form->getData();
 
             $post = $this->_createPOSTRequest(array('name' => $data['name']));
-            $result = $this->get('api_league_controller')->createLeagueAction($post, $this->getUser());
+            $result = $this->get('api_league_controller')->createLeagueAction($post);
 
             switch ($result->getStatusCode()) {
                 case 201:
@@ -82,7 +82,7 @@ class LeagueController extends FrontendController {
      * @Security("has_role('ROLE_USER')")
      */
     public function editAction($leagueId, Request $request) {
-        $response = $this->get('api_league_controller')->getLeagueAction($leagueId, $this->getUser());
+        $response = $this->get('api_league_controller')->getLeagueAction($leagueId);
 
         switch ($response->getStatusCode()) {
             case 404:
@@ -103,7 +103,7 @@ class LeagueController extends FrontendController {
             $data = $form->getData();
 
             $post = $this->_createPOSTRequest(array('name' => $data['name']));
-            $result = $this->get('api_league_controller')->editLeagueAction($leagueId, $post, $this->getUser());
+            $result = $this->get('api_league_controller')->editLeagueAction($leagueId, $post);
 
             switch ($result->getStatusCode()) {
                 case 200:
@@ -130,7 +130,7 @@ class LeagueController extends FrontendController {
      * @Security("has_role('ROLE_USER')")
      */
     public function deleteAction($leagueId) {
-        $response = $this->get('api_league_controller')->deleteLeagueAction($leagueId, $this->getUser());
+        $response = $this->get('api_league_controller')->deleteLeagueAction($leagueId);
         switch ($response->getStatusCode()) {
             case 404:
                 throw $this->createNotFoundException();
@@ -162,7 +162,7 @@ class LeagueController extends FrontendController {
             $data = $form->getData();
 
             $post = $this->_createPOSTRequest(array('code' => $data['code']));
-            $result = $this->get('api_league_controller')->joinLeagueAction($post, $this->getUser());
+            $result = $this->get('api_league_controller')->joinLeagueAction($post);
 
             switch ($result->getStatusCode()) {
                 case 404:
@@ -191,7 +191,7 @@ class LeagueController extends FrontendController {
      * @Security("has_role('ROLE_USER')")
      */
     public function leaveAction($leagueId) {
-        $result = $this->get('api_league_controller')->leaveLeagueAction($leagueId, $this->getUser());
+        $result = $this->get('api_league_controller')->leaveLeagueAction($leagueId);
 
         switch ($result->getStatusCode()) {
             case 200:

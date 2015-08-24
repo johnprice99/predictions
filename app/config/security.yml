@@ -23,6 +23,10 @@ security:
                 login_path: /oauth/v2/auth/login
             anonymous: true
 
+        api_doc:
+            pattern: ^/api/doc
+            anonymous: true
+
         api:
             pattern: ^/api
             fos_oauth: true

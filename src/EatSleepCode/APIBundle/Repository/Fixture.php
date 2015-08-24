@@ -16,4 +16,13 @@ class Fixture extends EntityRepository {
             ->getResult();
     }
 
+    public function findUnplayedByMatchDay($matchDay) {
+        return $this->createQueryBuilder('f')
+            ->select('COUNT(f)')
+            ->where('f.matchDay = ' . $matchDay)
+            ->andWhere('f.played = false')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 }
