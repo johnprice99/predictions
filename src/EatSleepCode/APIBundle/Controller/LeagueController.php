@@ -397,6 +397,7 @@ class LeagueController extends APIController {
                 ->leftJoin('EatSleepCodeAPIBundle:Prediction', 'p', 'WITH', 'p.user = u.id')
                 ->groupBy('u.id')
                 ->orderBy('points', 'DESC')
+                ->addOrderBy('exact', 'DESC')
                 ->addOrderBy('user');
 
             if ($leagueId != 0) $qb->join('u.leagues', 'l', 'WITH', 'l.id = :leagueId')->setParameter('leagueId', $leagueId);
